@@ -27,3 +27,4 @@ absolute.options
 
 .vscode/
 **/.DS_Store
+.idea/
