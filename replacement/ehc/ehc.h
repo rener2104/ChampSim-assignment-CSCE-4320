@@ -10,7 +10,7 @@
 #include "msl/fwcounter.h"
 
 /*
- * Structure to track cache line access history
+ * Class to track cache line access history
  * Used by Expected Hit Count (EHC) extension to DRRIP
  * Components:
  * 1. valid - Indicates if this entry contains valid data
@@ -18,7 +18,9 @@
  * 3. tag - Address tag to identify the cache line this entry tracks
  * 4. hit_counts - Queue to store sequence of hit counts for prediction
  */
-struct hit_history {
+class hit_history
+{
+public:
   bool valid;
   unsigned lru_recency;
   unsigned tag;
@@ -33,7 +35,8 @@ struct hit_history {
  * Built upon DRRIP (Dynamic Re-Reference Interval Prediction)
  * Inherits from the base replacement policy module
  */
-struct drrip : public champsim::modules::replacement {
+class drrip : public champsim::modules::replacement
+{
 private:
   /*
    * Helper method to access the RRPV of a specific cache block
@@ -110,8 +113,8 @@ public:
 
   /*
    * Constructor for initializing the DRRIP replacement policy
-   * Parameters:
-   * - cache: Pointer to the cache object this policy manages
+   Parameters:
+    - cache: Pointer to the cache object this policy manages
    */
   drrip(CACHE* cache);
 
