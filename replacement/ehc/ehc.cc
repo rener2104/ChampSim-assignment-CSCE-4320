@@ -1,5 +1,3 @@
-#include "ehc.h"
-
 #include <algorithm>
 #include <cassert>
 #include <random>
@@ -207,6 +205,9 @@ void drrip::update_hit_history(uint32_t cpu, champsim::address addr, unsigned hi
  * This implements set dueling to adaptively choose between BIP and SRRIP
  * Now also updates hit count tracking for EHC
  */
+
+// Handles replacement state updates when cache is accessed
+// Updates RRPV values and tracks hit counters
 void drrip::update_replacement_state(uint32_t triggering_cpu, long set, long way, champsim::address full_addr, champsim::address ip,
                                      champsim::address victim_addr, access_type type, uint8_t hit)
 {

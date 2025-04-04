@@ -120,7 +120,6 @@ public:
 
   /*
    * Core replacement policy interface functions:
-   *
    * 1. find_victim: Selects a cache block for replacement
    *    - Identifies the block with the highest RRPV value
    *    - Parameters include CPU ID, instruction ID, set index, and more
@@ -137,36 +136,32 @@ public:
                                 access_type type, uint8_t hit);
 
   /*
-   * Policy-specific helper methods:
-   *
+   * Policy helper methods:
    * 1. update_bip: Implements Bimodal Insertion Policy
    *    - Usually sets RRPV to maxRRPV with occasional exceptions
-   *
    * 2. update_srrip: Implements Static Re-Reference Interval Prediction
    *    - Sets RRPV to maxRRPV-1 for new entries
    */
   void update_bip(long set, long way);
   void update_srrip(long set, long way);
 
-  /*
-   * EHC specific methods:
-   *
-   * 1. get_expected_hits: Predicts how many hits a cache line will receive
+  /* EHC methods:
+   * get_expected_hits: Predicts how many hits a cache line will receive
    *    - Uses hit history to make predictions
    *    - Parameters: CPU ID and memory address
    *    - Returns: Predicted number of hits
    *
-   * 2. update_hit_history: Records actual hit counts for future prediction
+   * update_hit_history: Records actual hit counts for future prediction
    *    - Updates the hit history table with new observations
    *    - Parameters: CPU ID, address, and number of hits observed
    *
-   * 3. increment_access_counter: Increments the hit counter for a specific cache block
+   * increment_access_counter: Increments the hit counter for a specific cache block
    *    - Parameters: set and way indices of the block
    *
-   * 4. reset_access_counter: Resets the hit counter for a specific cache block
+   * reset_access_counter: Resets the hit counter for a specific cache block
    *    - Parameters: set and way indices of the block
    *
-   * 5. get_access_counter: Returns the current hit count for a specific cache block
+   * get_access_counter: Returns the current hit count for a specific cache block
    *    - Parameters: set and way indices of the block
    *    - Returns: Number of hits for the block
    */
