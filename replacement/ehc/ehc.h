@@ -1,7 +1,8 @@
-#ifndef REPLACEMENT_DRRIP_H
-#define REPLACEMENT_DRRIP_H
+#ifndef REPLACEMENT_EHC_H
+#define REPLACEMENT_EHC_H
 
 #include <array>
+#include <deque>
 #include <vector>
 
 #include "cache.h"
@@ -28,8 +29,8 @@ struct hit_history {
 };
 
 /*
- * DRRIP (Dynamic Re-Reference Interval Prediction) implementation
- * Extended with Expected Hit Count (EHC) functionality
+ * EHC (Expected Hit Count) implementation
+ * Built upon DRRIP (Dynamic Re-Reference Interval Prediction)
  * Inherits from the base replacement policy module
  */
 struct drrip : public champsim::modules::replacement {
@@ -52,6 +53,9 @@ private:
   unsigned get_hht_assoc(champsim::address addr);
 
   std::vector<hit_history>::iterator find_hit_history(uint32_t cpu, champsim::address addr);
+
+  // Access counter for each cache block to track hits
+  std::vector<unsigned> access_counters;
 
 public:
   /*
@@ -142,7 +146,7 @@ public:
   void update_srrip(long set, long way);
 
   /*
-   * EHC specific methods (to be implemented):
+   * EHC specific methods:
    *
    * 1. get_expected_hits: Predicts how many hits a cache line will receive
    *    - Uses hit history to make predictions
@@ -152,9 +156,22 @@ public:
    * 2. update_hit_history: Records actual hit counts for future prediction
    *    - Updates the hit history table with new observations
    *    - Parameters: CPU ID, address, and number of hits observed
+   *
+   * 3. increment_access_counter: Increments the hit counter for a specific cache block
+   *    - Parameters: set and way indices of the block
+   *
+   * 4. reset_access_counter: Resets the hit counter for a specific cache block
+   *    - Parameters: set and way indices of the block
+   *
+   * 5. get_access_counter: Returns the current hit count for a specific cache block
+   *    - Parameters: set and way indices of the block
+   *    - Returns: Number of hits for the block
    */
   unsigned get_expected_hits(uint32_t cpu, champsim::address addr);
   void update_hit_history(uint32_t cpu, champsim::address addr, unsigned hits);
+  void increment_access_counter(long set, long way);
+  void reset_access_counter(long set, long way);
+  unsigned get_access_counter(long set, long way);
 };
 
 #endif
