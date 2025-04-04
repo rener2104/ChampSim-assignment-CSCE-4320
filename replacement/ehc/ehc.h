@@ -21,7 +21,7 @@ struct hit_history {
   bool valid;
   unsigned lru_recency;
   unsigned tag;
-  std::queue<unsigned> hit_counts;
+  std::deque<unsigned> hit_counts;
 
   // Needed to create a default constructor for the hit_history table
   hit_history() : valid(false), lru_recency(0), tag(0), hit_counts() {}
