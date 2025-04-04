@@ -5,18 +5,7 @@
 
 #include "champsim.h"
 
-/*
- * Constructor for DRRIP (Dynamic Re-Reference Interval Prediction) cache replacement policy
- * Steps:
- * 1. Initialize base class and member variables from the cache parameters
- * 2. Create a vector to store RRPV values for each cache block (NUM_SET * NUM_WAY total blocks)
- * 3. Calculate the total number of set dueling monitor (SDM) sets needed
- * 4. Randomly select cache sets to be used for policy evaluation (leader sets)
- * 5. Sort the randomly selected sets for easier lookup
- * 6. Initialize the policy selector (PSEL) counters to zero for each CPU
- * 7. Initialize the hit history table for EHC (one table per CPU)
- * 8. Initialize access counters for tracking hits per cache block
- */
+// Constructor - sets up DRRIP with EHC extension
 drrip::drrip(CACHE* cache)
     : replacement(cache), NUM_SET(cache->NUM_SET), NUM_WAY(cache->NUM_WAY), rrpv(static_cast<std::size_t>(NUM_SET * NUM_WAY)),
       access_counters(static_cast<std::size_t>(NUM_SET * NUM_WAY), 0)
