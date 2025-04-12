@@ -1,3 +1,5 @@
+#include "ehc.h"
+
 #include <algorithm>
 #include <cassert>
 #include <random>
